@@ -14,9 +14,10 @@ export function getPokemonIcon(id) {
 
 export function searchPokemon(search, pokemonList) {
   const alphaSearch = new RegExp(`^${search}`, 'gi');
+    
   return (
     pokemonList.filter((poke) => {
-      if (alphaSearch.test(poke.name)) {
+      if (alphaSearch.test(poke.name) || alphaSearch.test(poke.galarID) ) {
         return poke;
       }
       return '';

@@ -26,9 +26,11 @@
     "assets": "^3.0.1",
     "bulma": "^0.8.0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "src": "^1.1.2"
   },
   "alias": {
+    "src": "./src",
     "components": "./src/components",
     "assets": "./assets/components"
   }

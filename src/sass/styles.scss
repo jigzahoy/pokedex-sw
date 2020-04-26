@@ -144,6 +144,10 @@ div#root {
     transform: translateX(-50%);
     image-rendering: pixelated;
   }
+
+  .--hide {
+    display: none;
+  }
 }
 
 .poke-checkbox {

@@ -1,41 +1,47 @@
 import React, { useState } from 'react';
 
 import PokedexList from 'components/PokedexList'
+import { usePersistedState } from 'src/utils/custom-hooks'
 import { getAllPokemon, searchPokemon } from '../api/pokemon';
 
 
-const Pokedex = ({ searchField }) => {
-  const allPokemon = getAllPokemon();
 
-  const [caught, setCaught] = useState([]);
+const allPokemon = getAllPokemon();
+
+const Pokedex = ({ searchField }) => {
+
+  const [caughtPokemon, setCaughtPokemon] = usePersistedState('caught', []);
+  const hashCaughtPokemon = new Map(caughtPokemon.map(obj => [obj.nationalID, obj.caught]));
 
   const handleCaught = (event) => {
     const { checked, value: pokeID } = event.target;
     const pokeNum = parseInt(pokeID, 10);
+
     if (checked) {
-      setCaught([...caught, { nationalID: pokeNum, caught: checked }])
+      setCaughtPokemon([...caughtPokemon, { nationalID: pokeNum, caught: checked }])
     } else {
-      setCaught(caught.filter(item => item.nationalID !== pokeNum))
+      setCaughtPokemon(caughtPokemon.filter(item => item.nationalID !== pokeNum))
     }
   };
 
   const resultPokemon = () => {
-    // Return Union of caught and search pokemon
-    // @TODO: CAUGHT SHOWS ON THE LIST EVENT THE SEARCH RESULT IS NOT INCLUDED
-    const results = searchPokemon(searchField, allPokemon);
-
-    return (results)
+    const result = searchPokemon(searchField, allPokemon).map((item) =>{
+      const a =  { caught: hashCaughtPokemon.get(item.nationalID) || false };
+      return{...item, ...a}
+    })
+    return (result)
   };
 
+  console.log('rerended pokedex');
   return (
     <div id="pokedex-container" className=" container">
       <div className="columns">
         <div className="column is-4 is-offset-4">
           <ul className="pokemon-list">
             {
-              resultPokemon().map(({ name, galarID, nationalID }) => {
+              resultPokemon().map(({ name, galarID, caught, nationalID }) => {
                 return (
-                  <PokedexList key={nationalID} name={name} galarID={galarID} nationalID={nationalID} handleCaught={handleCaught} />
+                  <PokedexList key={nationalID} name={name} galarID={galarID} nationalID={nationalID} handleCaught={handleCaught} isCaught={caught}/>
                 )
               })
             }
