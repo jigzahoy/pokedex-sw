@@ -1,12 +1,15 @@
 # Pokédex Tracker for Pokémon Sword and Shield
 
+<pre>
+Project Abandoned, updated to other repo using NextJS
+</pre>
+
 This is a replicate of the Pokédex from the game Pokémon Sword and Shield.
 
 This project was created using React + Parcel. This projects serves as a learning for React using Pure Functional Components and Hooks.
 
 ## TODO
 
-- Search functionality
 - Sorting functionality
 - gh-pages
 - ...and many more.
